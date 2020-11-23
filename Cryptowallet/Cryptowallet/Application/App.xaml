@@ -6,6 +6,12 @@
              mc:Ignorable="d"
              x:Class="Cryptowallet.Application.App">
     <Application.Resources>
-        
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Common/Styles/AppColors.xaml" />
+                <ResourceDictionary Source="../Common/Styles/ControlCustomStyles.xaml" />
+                <ResourceDictionary Source="../Common/Styles/CellTemplates.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -15,18 +15,18 @@
        FlyoutVerticalScrollMode="Enabled">
     <Shell.Resources>
         <Style x:Key="BaseStyle" TargetType="Element">
-            <Setter Property="Shell.BackgroundColor" Value="#347AF0" />
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource PrimaryBlue}" />
             <Setter Property="Shell.ForegroundColor" Value="White" />
             <Setter Property="Shell.TitleColor" Value="White" />
             <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
         </Style>
         <Style x:Key="DepositedShell" TargetType="Element"
                BasedOn="{StaticResource BaseStyle}">
-            <Setter Property="Shell.BackgroundColor" Value="#689F39"/>
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource DepositedTab}"/>
         </Style>
         <Style x:Key="WithDrawnShell" TargetType="Element"
                BasedOn="{StaticResource BaseStyle}">
-            <Setter Property="Shell.BackgroundColor" Value="#ED3B3B"/>
+            <Setter Property="Shell.BackgroundColor" Value="{StaticResource WithdrawnTab}"/>
         </Style>
     </Shell.Resources>
     <Shell.FlyoutHeader>
