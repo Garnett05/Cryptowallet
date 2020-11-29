@@ -2,10 +2,18 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Cryptowallet.Modules.Wallet.WalletView">
     <ContentPage.Content>
-        <Label Text="Wallet View" />
+        <ScrollView BackgroundColor ="White">
+            <StackLayout Padding="0, 20, 0 ,0" >
+                <microcharts:ChartView Chart="{Binding PortfolioView}" 
+                                       HeightRequest="200"
+                                       BackgroundColor="White"
+                                       Margin="10, 20, 10, 0"/>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
