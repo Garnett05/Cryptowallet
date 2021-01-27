@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Cryptowallet.Application;
-
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,6 +12,7 @@ namespace Cryptowallet.Modules.Wallet
         public WalletView()
         {
             InitializeComponent();
+                        
             BindingContext = App.Container.Resolve<WalletViewModel>();
         }
         protected override async void OnAppearing()

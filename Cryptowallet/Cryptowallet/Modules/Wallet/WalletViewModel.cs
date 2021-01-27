@@ -17,7 +17,26 @@ namespace Cryptowallet.Modules.Wallet
         private IWalletController _walletController;
         private Chart _portfolioView;
         private int _coinsHeight;
+        private int _transactionsHeight;
         private ObservableCollection<Coin> _assets;
+        private ObservableCollection<Transaction> _latestTransaction;
+        public ObservableCollection<Transaction> LatestTransaction
+        {
+            get => _latestTransaction;
+            set { SetProperty(ref _latestTransaction, value);
+                if (_latestTransaction == null)
+                {
+                    return;
+                }
+                if (_latestTransaction.Count == 0)
+                {
+                    TransactionsHeight = 430;
+                    return;
+                }
+                TransactionsHeight = _latestTransaction.Count * 85;
+            }
+
+        }
         public Chart PortfolioView
         {
             get => _portfolioView;
@@ -41,8 +60,19 @@ namespace Cryptowallet.Modules.Wallet
                 CoinsHeight = _assets.Count * 85;
             }
         }
+        public int TransactionsHeight
+        {
+            get => _transactionsHeight;
+            set
+            {
+                SetProperty(ref _transactionsHeight, value);
+            }
+        }
         public override async Task InitializeAsync(object parameter)
         {
+            var transactions = await _walletController.GetTransactions();
+            LatestTransaction = new ObservableCollection<Transaction>(transactions.Take(3));            
+
             var assets = await _walletController.GetCoins();
             Assets = new ObservableCollection<Coin>(assets.Take(3));
             BuildChart(assets);
