@@ -18,6 +18,9 @@ namespace Cryptowallet.Modules.Wallet
         private Chart _portfolioView;
         private int _coinsHeight;
         private int _transactionsHeight;
+        private decimal _portfolioValue;
+        private bool _isRefreshing;
+        private bool _hasTransaction;
         private ObservableCollection<Coin> _assets;
         private ObservableCollection<Transaction> _latestTransaction;
         public ObservableCollection<Transaction> LatestTransaction
@@ -28,6 +31,7 @@ namespace Cryptowallet.Modules.Wallet
                 {
                     return;
                 }
+                HasTransaction = _latestTransaction.Count > 0;
                 if (_latestTransaction.Count == 0)
                 {
                     TransactionsHeight = 430;
@@ -68,18 +72,41 @@ namespace Cryptowallet.Modules.Wallet
                 SetProperty(ref _transactionsHeight, value);
             }
         }
+        public decimal PortfolioValue
+        {
+            get => _portfolioValue;
+            set { SetProperty(ref _portfolioValue, value); }
+        }
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set { { SetProperty(ref _isRefreshing, value); } }
+        }
+        public bool HasTransaction
+        {
+            get => _hasTransaction;
+            set { SetProperty(ref _hasTransaction, value); }
+        }
         public override async Task InitializeAsync(object parameter)
         {
+            bool reload = (bool)parameter;
+
             var transactions = await _walletController.GetTransactions();
             LatestTransaction = new ObservableCollection<Transaction>(transactions.Take(3));            
 
             var assets = await _walletController.GetCoins();
             Assets = new ObservableCollection<Coin>(assets.Take(3));
             BuildChart(assets);
+            PortfolioValue = assets.Sum(x => x.DollarValue);
+
+            IsRefreshing = false;
+            IsBusy = false;
         }
         public WalletViewModel(IWalletController walletController)
         {
             _walletController = walletController;
+            Assets = new ObservableCollection<Coin>();
+            LatestTransaction = new ObservableCollection<Transaction>();
         }
 
         private void BuildChart(List<Coin> assets)
