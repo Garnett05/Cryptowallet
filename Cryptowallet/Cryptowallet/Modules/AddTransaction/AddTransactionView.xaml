@@ -1,10 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Cryptowallet.Modules.AddTransaction.AddTransactionView">
-  <ContentView.Content>
-      <StackLayout>
-          <Label Text="Dummy add new transaction" />
-      </StackLayout>
-  </ContentView.Content>
-</ContentView>
+             x:Class="Cryptowallet.Modules.AddTransaction.AddTransactionView"
+             Shell.TabBarIsVisible="False">
+  <ContentPage.Content>      
+          <Label Text="Dummy add new transaction" />      
+  </ContentPage.Content>
+</ContentPage>

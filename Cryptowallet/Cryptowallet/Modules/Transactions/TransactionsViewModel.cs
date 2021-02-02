@@ -43,6 +43,12 @@ namespace Cryptowallet.Modules.Transactions
         {
             await GetTransactions();
         }
+        public ICommand TradeCommand { get => new Command(async () => await PerformNavigation()); }
+
+        private async Task PerformNavigation()
+        {
+            await Shell.Current.GoToAsync("addtransactions");            
+        }
 
         public override async Task InitializeAsync(object parameter)
         {

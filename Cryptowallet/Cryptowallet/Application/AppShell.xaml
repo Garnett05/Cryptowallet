@@ -33,7 +33,8 @@
         <controls:FlyoutHeader />
     </Shell.FlyoutHeader>
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems"
-                Style="{StaticResource BaseStyle}">
+                Style="{StaticResource BaseStyle}"
+                Route="portfolio">
         <ShellContent Title="Portfolio"
                       ContentTemplate="{DataTemplate wallet:WalletView}" >
         </ShellContent>
@@ -53,7 +54,8 @@
         </Tab>        
         <Tab Icon="deposited_tab.png"
              Title="Deposited"
-             Style="{StaticResource DepositedShell}">
+             Style="{StaticResource DepositedShell}"
+             Route="deposited">
             <ShellContent ContentTemplate="{DataTemplate transactions:DepositedTransactionsView}" />
         </Tab>
         <Tab Icon="withdrawn_tab.png"

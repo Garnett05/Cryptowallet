@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace Cryptowallet.Modules.AddTransaction
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AddTransactionView : ContentView
+    public partial class AddTransactionView : ContentPage
     {
         public AddTransactionView()
         {
