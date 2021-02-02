@@ -5,11 +5,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Cryptowallet.Modules.Transactions.DepositedTransactionsView">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add"
+                     Order="Primary"
+                     Priority="0"
+                     Command="{Binding TradeCommand}" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Deposited Transactions View"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <RefreshView IsRefreshing="{Binding IsRefreshing}"
+                     Command="{Binding RefreshTransactionsCommand}" >
+            <CollectionView ItemsSource="{Binding Transactions}"
+                            SelectionMode="Single"
+                            ItemTemplate="{StaticResource TransactionCell}"
+                            SelectedItem="{Binding SelectedTransaction}"
+                            SelectionChangedCommand="{Binding TransactionSelectedCommand}" />
+        </RefreshView>
     </ContentPage.Content>
 </ContentPage>
