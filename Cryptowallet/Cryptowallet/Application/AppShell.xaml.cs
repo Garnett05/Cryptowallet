@@ -12,7 +12,7 @@ namespace Cryptowallet.Application
             InitializeComponent();
             BindingContext = App.Container.Resolve<AppShellViewModel>();
 
-            Routing.RegisterRoute("addtransactions", typeof(Modules.AddTransaction.AddTransactionView));
+            Routing.RegisterRoute("AddTransactionViewModel", typeof(Modules.AddTransaction.AddTransactionView));
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Cryptowallet.Common.Base;
 using Cryptowallet.Common.Controllers;
 using Cryptowallet.Common.Models;
+using Cryptowallet.Common.Navigation;
+using Cryptowallet.Modules.AddTransaction;
+using Cryptowallet.Modules.Wallet;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,6 +16,7 @@ namespace Cryptowallet.Modules.Transactions
     public class TransactionsViewModel : BaseViewModel
     {
         private IWalletController _walletController;
+        private INavigationService _navigationService;
         private Transaction _selectedTransaction;
         private ObservableCollection<Transaction> _transactions;
         private bool _isRefreshing;
@@ -41,13 +45,13 @@ namespace Cryptowallet.Modules.Transactions
 
         private async Task TransactionSelected()
         {
-            await GetTransactions();
+            await _navigationService.PushAsync<AddTransactionViewModel>("id=1");
         }
         public ICommand TradeCommand { get => new Command(async () => await PerformNavigation()); }
 
         private async Task PerformNavigation()
         {
-            await Shell.Current.GoToAsync("addtransactions");            
+            await _navigationService.PushAsync<AddTransactionViewModel>();
         }
 
         public override async Task InitializeAsync(object parameter)
@@ -68,9 +72,10 @@ namespace Cryptowallet.Modules.Transactions
             IsRefreshing = false;
         }
 
-        public TransactionsViewModel(IWalletController walletController)
+        public TransactionsViewModel(IWalletController walletController, INavigationService navigationService)
         {
             _walletController = walletController;
+            _navigationService = navigationService;
             Transactions = new ObservableCollection<Transaction>();
         }
     }
