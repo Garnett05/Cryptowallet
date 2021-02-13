@@ -6,6 +6,7 @@
              Shell.TabBarIsVisible="False">
     <ContentPage.Resources>
         <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+        <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
@@ -28,10 +29,10 @@
             <Label Text="Amount"
                    Margin="16, 10, 16, 0" />
             <Entry Style="{StaticResource Input}"
-                   Text=""
+                   Text="{Binding Amount.Value, Mode=TwoWay}"
                    Keyboard="Numeric"
                    Margin="16, 0, 16, 0" />
-            <Label Text=""
+            <Label Text="{Binding Amount.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
                    Style="{StaticResource ValidationErrorLabel}"
                    Margin="16, 0, 24, 0" />
             <Label Text="Transaction Date"
