@@ -1,8 +1,7 @@
 ﻿using Autofac;
-using System;
+using Cryptowallet.Common.Database;
+using Cryptowallet.Common.Models;
 using System.Reflection;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Cryptowallet.Application
 {
@@ -20,7 +19,7 @@ namespace Cryptowallet.Application
                 .AsImplementedInterfaces()
                 .AsSelf();
             //TODO - Register repositories if you use them
-
+            builder.RegisterType<Repository<Transaction>>().As<IRepository<Transaction>>();
             //get container
             Container = builder.Build();
             MainPage = new AppShell();

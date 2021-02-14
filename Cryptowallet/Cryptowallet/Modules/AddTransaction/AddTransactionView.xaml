@@ -4,6 +4,9 @@
              x:Class="Cryptowallet.Modules.AddTransaction.AddTransactionView"
              xmlns:converters="clr-namespace:Cryptowallet.Common.Converters"
              Shell.TabBarIsVisible="False">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding GoBackCommand}" />
+    </Shell.BackButtonBehavior>
     <ContentPage.Resources>
         <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
         <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter" />
@@ -38,6 +41,7 @@
             <Label Text="Transaction Date"
                    Margin="16, 10, 16, 0" />
             <DatePicker Margin="16, 0, 16, 0"
+                        Format="dd/MM/yyyy"
                         Date="{Binding TransactionDate}" />
             <Button Style="{StaticResource BlueButton}"
                     Margin="28"

@@ -11,6 +11,7 @@ namespace Cryptowallet.Common.Navigation
     {
         Task PushAsync<TViewModel>(string parameters = null) where TViewModel : BaseViewModel;
         Task PopAsync();
+        Task GoBackAsync();
         Task InsertAsRoot<TViewModel>(string parameters = null) where TViewModel : BaseViewModel;
     }
     public class ShellRoutingService : INavigationService
@@ -18,6 +19,10 @@ namespace Cryptowallet.Common.Navigation
         public Task PopAsync()
         {
             return Shell.Current.Navigation.PopAsync();
+        }
+        public Task GoBackAsync()
+        {
+            return Shell.Current.GoToAsync("..");
         }
         public Task InsertAsRoot<TViewModel>(string parameters = null) where TViewModel : BaseViewModel
         {

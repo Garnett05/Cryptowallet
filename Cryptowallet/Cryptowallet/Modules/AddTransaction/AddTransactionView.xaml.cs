@@ -19,5 +19,10 @@ namespace Cryptowallet.Modules.AddTransaction
             InitializeComponent();
             BindingContext = Application.App.Container.Resolve<AddTransactionViewModel>();
         }
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+            await (BindingContext as AddTransactionViewModel).InitializeAsync(null);
+        }
     }
 }
