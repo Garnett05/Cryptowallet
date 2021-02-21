@@ -16,14 +16,9 @@ namespace Cryptowallet.Common.Models
         }
         public Coin()
         {
-        }
-        [JsonProperty("id")]
-        public int CoinId { get; set; }
-        [JsonProperty("name")]
-        public string Name { get; set; }
-        [JsonProperty("symbol")]
-        public string Symbol { get; set; }
-        [JsonProperty("price")]
+        }                
+        public string Name { get; set; }        
+        public string Symbol { get; set; }        
         public double Price { get; set; }
         public decimal Amount { get; set; }
         public decimal DollarValue { get; set; }
@@ -40,7 +35,7 @@ namespace Cryptowallet.Common.Models
                 new Coin("Ethereum", "ETH", "ETH.png", "#BDACAC"),
                 new Coin("Litecoin", "LTC", "LTC.png", "#9063B0"),
                 new Coin("Monero", "XMR", "XMR.png", "#DA8B90"),
-                new Coin("Bitcoin", "BTC", "BTC.png", "#850CDB"),
+                new Coin("Ripple", "XRP", "XRP.png", "#856F92"),
                 new Coin("Bitcoin", "BTC", "BTC.png", "#850CDB")
             };
         }

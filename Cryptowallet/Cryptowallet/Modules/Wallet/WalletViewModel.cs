@@ -1,6 +1,8 @@
 ﻿using Cryptowallet.Common.Base;
 using Cryptowallet.Common.Controllers;
 using Cryptowallet.Common.Models;
+using Cryptowallet.Common.Navigation;
+using Cryptowallet.Modules.AddTransaction;
 using Microcharts;
 using SkiaSharp;
 using System;
@@ -9,12 +11,62 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Cryptowallet.Modules.Wallet
 {
     public class WalletViewModel : BaseViewModel
     {
+        public WalletViewModel(IWalletController walletController, INavigationService navigationService)
+        {
+            _walletController = walletController;
+            _navigationService = navigationService;
+            Assets = new ObservableCollection<Coin>();
+            LatestTransaction = new ObservableCollection<Transaction>();
+        }
+        public override async Task InitializeAsync(object parameter)
+        {
+            bool reload = (bool)parameter;
+
+            var transactions = await _walletController.GetTransactions();
+            LatestTransaction = new ObservableCollection<Transaction>(transactions.Take(3));
+
+            var assets = await _walletController.GetCoins();
+            Assets = new ObservableCollection<Coin>(assets.Take(3));
+            BuildChart(assets);
+            PortfolioValue = assets.Sum(x => x.DollarValue);
+
+            IsRefreshing = false;
+            IsBusy = false;
+        }
+        public ICommand AddNewTransactionCommand { get => new Command(async () => await AddNewTransaction()); }
+
+        private async Task AddNewTransaction()
+        {
+            await _navigationService.PushAsync<AddTransactionViewModel>();
+        }
+        private void BuildChart(List<Coin> assets)
+        {
+            var whiteColor = SKColor.Parse("#FFFFFF");
+            var colors = Coin.GetAvailableAssets();
+            List<ChartEntry> entries = new List<ChartEntry>();
+            foreach (var i in assets)
+            {
+                entries.Add(new ChartEntry((float)i.DollarValue)
+                {
+                    TextColor = whiteColor,
+                    ValueLabel = i.Name,
+                    Color = SKColor.Parse(colors.First(x => x.Symbol == i.Symbol).HexColor)
+                });
+            }
+            var chart = new DonutChart { Entries = entries };
+            chart.BackgroundColor = whiteColor;
+            PortfolioView = chart;
+        }
+
         private IWalletController _walletController;
+        private INavigationService _navigationService;
         private Chart _portfolioView;
         private int _coinsHeight;
         private int _transactionsHeight;
@@ -39,7 +91,6 @@ namespace Cryptowallet.Modules.Wallet
                 }
                 TransactionsHeight = _latestTransaction.Count * 85;
             }
-
         }
         public Chart PortfolioView
         {
@@ -86,46 +137,6 @@ namespace Cryptowallet.Modules.Wallet
         {
             get => _hasTransaction;
             set { SetProperty(ref _hasTransaction, value); }
-        }
-        public override async Task InitializeAsync(object parameter)
-        {
-            bool reload = (bool)parameter;
-
-            var transactions = await _walletController.GetTransactions();
-            LatestTransaction = new ObservableCollection<Transaction>(transactions.Take(3));            
-
-            var assets = await _walletController.GetCoins();
-            Assets = new ObservableCollection<Coin>(assets.Take(3));
-            BuildChart(assets);
-            PortfolioValue = assets.Sum(x => x.DollarValue);
-
-            IsRefreshing = false;
-            IsBusy = false;
-        }
-        public WalletViewModel(IWalletController walletController)
-        {
-            _walletController = walletController;
-            Assets = new ObservableCollection<Coin>();
-            LatestTransaction = new ObservableCollection<Transaction>();
-        }
-
-        private void BuildChart(List<Coin> assets)
-        {
-            var whiteColor = SKColor.Parse("#FFFFFF");
-            var colors = Coin.GetAvailableAssets();
-            List<ChartEntry> entries = new List<ChartEntry>();
-            foreach (var i in assets)
-            {
-                entries.Add(new ChartEntry((float)i.DollarValue)
-                {
-                    TextColor = whiteColor,
-                    ValueLabel = i.Name,
-                    Color = SKColor.Parse(colors.First(x => x.Symbol == i.Symbol).HexColor)
-                });
-            }
-            var chart = new DonutChart { Entries = entries };
-            chart.BackgroundColor = whiteColor;
-            PortfolioView = chart;
         }
     }
 }

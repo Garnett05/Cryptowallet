@@ -4,8 +4,17 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Cryptowallet.Modules.Assets.AssetsView">
+             x:Class="Cryptowallet.Modules.Assets.AssetsView"
+             Title="Assets">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add"
+                     Order="Primary"
+                     Priority="0"
+                     Command="{Binding AddTransactionCommand}" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <Label Text="Assets View" />
+        <CollectionView ItemsSource="{Binding Assets}"
+                        SelectionMode="None"
+                        ItemTemplate="{StaticResource AssetCell}" />
     </ContentPage.Content>
 </ContentPage>

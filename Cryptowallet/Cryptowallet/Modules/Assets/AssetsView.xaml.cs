@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Autofac;
+using Cryptowallet.Application;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,6 +12,12 @@ namespace Cryptowallet.Modules.Assets
         public AssetsView()
         {
             InitializeComponent();
+            BindingContext = App.Container.Resolve<AssetsViewModel>();
+        }
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+            await(BindingContext as AssetsViewModel).InitializeAsync(null);
         }
     }
 }
