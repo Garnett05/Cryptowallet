@@ -1,4 +1,5 @@
-﻿using Cryptowallet.Common.Base;
+﻿using Cryptowallet.Application;
+using Cryptowallet.Common.Base;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,8 @@ namespace Cryptowallet.Common.Navigation
         Task PopAsync();
         Task GoBackAsync();
         Task InsertAsRoot<TViewModel>(string parameters = null) where TViewModel : BaseViewModel;
+        void GoToMainFlow();
+        void GoToLoginFlow();
     }
     public class ShellRoutingService : INavigationService
     {
@@ -41,6 +44,16 @@ namespace Cryptowallet.Common.Navigation
                 route += $"?{parameters}";
             }
             return Shell.Current.GoToAsync(route);
+        }
+
+        public void GoToMainFlow()
+        {            
+            App.Current.MainPage = new AppShell();
+        }
+
+        public void GoToLoginFlow()
+        {            
+            App.Current.MainPage = new LoginShell();
         }
     }
 }

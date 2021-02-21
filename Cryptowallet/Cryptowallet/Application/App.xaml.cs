@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Cryptowallet.Common.Database;
 using Cryptowallet.Common.Models;
+using Cryptowallet.Modules.Loading;
 using System.Reflection;
 
 namespace Cryptowallet.Application
@@ -22,7 +23,8 @@ namespace Cryptowallet.Application
             builder.RegisterType<Repository<Transaction>>().As<IRepository<Transaction>>();
             //get container
             Container = builder.Build();
-            MainPage = new AppShell();
+            //set first page
+            MainPage = Container.Resolve<LoadingView>();
         }
 
         protected override void OnStart()

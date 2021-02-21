@@ -6,6 +6,9 @@ namespace Cryptowallet.Application
 {
     public class Constants
     {
+        public const string SHOWN_ONBOARDING = "shownOnboarding";
+        public const string IS_USER_LOGGED_IN = "userLogged";
+
         public const string TRANSACTION_DEPOSITED = "Deposited";
         public const string TRANSACTION_WITHDRAWN = "Withdrawn";
         public const string TRANSACTION_DEPOSITED_IMAGE = "deposited.png";
