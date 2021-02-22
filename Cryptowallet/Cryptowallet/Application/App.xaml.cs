@@ -21,6 +21,7 @@ namespace Cryptowallet.Application
                 .AsSelf();
             //TODO - Register repositories if you use them
             builder.RegisterType<Repository<Transaction>>().As<IRepository<Transaction>>();
+            builder.RegisterType<Repository<User>>().As<IRepository<User>>();
             //get container
             Container = builder.Build();
             //set first page
